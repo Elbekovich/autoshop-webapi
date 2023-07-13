@@ -6,4 +6,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AutoShop.Domain\AutoShop.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="Npgsql" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\Users\" />
+  </ItemGroup>
+
 </Project>

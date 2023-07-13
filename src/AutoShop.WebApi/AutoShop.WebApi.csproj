@@ -11,4 +11,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AutoShop.Service\AutoShop.Service.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
