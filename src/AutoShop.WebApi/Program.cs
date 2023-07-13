@@ -1,6 +1,7 @@
 using AutoShop.DataAccess.Interfaces.Categories;
 using AutoShop.DataAccess.Interfaces.Users;
 using AutoShop.DataAccess.Repositories.Categories;
+using AutoShop.DataAccess.Repositories.Users;
 using AutoShop.Service.Interfaces.Categories;
 using AutoShop.Service.Interfaces.Common;
 using AutoShop.Service.Interfaces.Users;
@@ -20,8 +21,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-//builder.Services.AddScoped<IUserRepository, UserRepository>();
-//builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 var app = builder.Build();

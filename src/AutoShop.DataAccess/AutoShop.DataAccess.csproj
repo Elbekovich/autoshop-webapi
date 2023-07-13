@@ -15,8 +15,4 @@
     <PackageReference Include="Npgsql" Version="7.0.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\Users\" />
-  </ItemGroup>
-
 </Project>
