@@ -5,6 +5,7 @@ using AutoShop.Domain.Entities.Users;
 using AutoShop.Domain.Exceptions.Categories;
 using AutoShop.Domain.Exceptions.Users;
 using AutoShop.Service.Common.Helpers;
+using AutoShop.Service.Common.Security;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
 using System;
@@ -29,6 +30,7 @@ public class UserService : IUserService
 
     public async Task<bool> CreateAsync(UserCreateDto userCreateDto)
     {
+        
         User us = new User()
         {
             FirstName = userCreateDto.FirstName,
@@ -41,11 +43,19 @@ public class UserService : IUserService
             Country = userCreateDto.Country,
             Region = userCreateDto.Region,
             PasswordHash = userCreateDto.PasswordHash,
-            Salt = userCreateDto.Salt,
+            
+            //Salt = userCreateDto.Salt,
             CreatedAt = TimeHelper.GetDateTime(),
             UpdatedAt = TimeHelper.GetDateTime(),
             Role = userCreateDto.Role,
+
         };
+        var hashres = PasswordHasher.Hash(us.PasswordHash);
+        us.Salt = hashres.Salt;
+        us.PasswordHash = hashres.PasswordHash;
+
+
+
         var res = await _userRepository.CreateAsync(us);
         return res > 0;
     }
@@ -79,7 +89,13 @@ public class UserService : IUserService
         userss.Country = userUpdateDto.Country;
         userss.Region = userUpdateDto.Region;
         userss.PasswordHash = userUpdateDto.PasswordHash;
-        userss.Salt = userUpdateDto.Salt;
+
+        var hashres = PasswordHasher.Hash(userss.PasswordHash);
+        //userss.Salt = hashres.Salt;
+        userss.PasswordHash = hashres.PasswordHash;
+
+
+        //userss.Salt = userUpdateDto.Salt;
         userss.UpdatedAt = TimeHelper.GetDateTime();
         userss.Role = userss.Role;
         var rbResult = await _userRepository.UpdateAsync(id, userss);

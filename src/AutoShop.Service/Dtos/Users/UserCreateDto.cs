@@ -28,7 +28,7 @@ public class UserCreateDto
 
     public string PasswordHash { get; set; } = string.Empty;
 
-    public string Salt { get; set; } = string.Empty;
+    //public string Salt { get; set; } = string.Empty;
 
     public IdentityRole Role { get; set; }
 }
