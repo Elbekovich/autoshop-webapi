@@ -1,6 +1,8 @@
 ﻿using AutoShop.DataAccess.Utils;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
+using AutoShop.Service.Validators.Dtos.Categories;
+using AutoShop.Service.Validators.Dtos.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +31,13 @@ namespace AutoShop.WebApi.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] UserCreateDto userCreateDto)
-            => Ok(await _userService.CreateAsync(userCreateDto));
+        {
+            var createValidator = new UserCreateValidator();
+            var result = createValidator.Validate(userCreateDto);
+            if (result.IsValid) return Ok(await _userService.CreateAsync(userCreateDto));
+            else return BadRequest(result.Errors);
+        }
+            //=> Ok(await _userService.CreateAsync(userCreateDto));
 
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long id)
