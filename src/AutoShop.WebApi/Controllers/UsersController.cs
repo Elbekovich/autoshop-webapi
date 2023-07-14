@@ -1,9 +1,7 @@
 ﻿using AutoShop.DataAccess.Utils;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
-using AutoShop.Service.Validators.Dtos.Categories;
 using AutoShop.Service.Validators.Dtos.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoShop.WebApi.Controllers
@@ -45,7 +43,16 @@ namespace AutoShop.WebApi.Controllers
 
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] UserUpdateDto userUpdateDto)
-            => Ok(await _userService.UpdateAsync(id, userUpdateDto));
+        {
+            var updateValidator = new UserUpdateValidator();
+            //var validationResult = updateValidator.Validate(dto);
+            var vrResult = updateValidator.Validate(userUpdateDto);
+            //if (validationResult.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
+            if (vrResult.IsValid) return Ok(await _userService.UpdateAsync(id, userUpdateDto));
+            else return BadRequest(vrResult.Errors);
+            //else return BadRequest(validationResult.Errors);
+        }
+            //=> Ok(await _userService.UpdateAsync(id, userUpdateDto));
         //=> Ok(await _userService.UpdateAsync(categoryId, userCreateDto));
 
         //[HttpGet]

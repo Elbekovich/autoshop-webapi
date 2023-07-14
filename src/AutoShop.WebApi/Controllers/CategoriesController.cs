@@ -39,7 +39,6 @@ namespace AutoShop.WebApi.Controllers
             if(result.IsValid) return Ok(await _service.CreateAsync(dto));  
             else return BadRequest(result.Errors);
         }
-            //=> Ok(await _service.CreateAsync(dto));
 
         [HttpPut("{categoryId}")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
@@ -49,17 +48,6 @@ namespace AutoShop.WebApi.Controllers
             if (validationResult.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
             else return BadRequest(validationResult.Errors);
         }
-        //    => Ok(await _service.UpdateAsync(categoryId, dto));
-
-
-        //[HttpDelete]
-        //public async Task<IActionResult> DeleteAsync(long categoryId)
-        //  => Ok(await _service.DeleteAsync(categoryId));
-
-        //[HttpGet]
-        //public async Task<IActionResult> CountAsync()
-        //=> Ok(await _service.CountAsync());
-
 
         [HttpDelete("{categoryId}")]
         public async Task<IActionResult> DeleteAsync(long categoryId)
