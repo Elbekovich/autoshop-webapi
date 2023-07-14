@@ -1,6 +1,7 @@
 ﻿using AutoShop.DataAccess.Utils;
 using AutoShop.Service.Dtos.Categories;
 using AutoShop.Service.Interfaces.Categories;
+using AutoShop.Service.Validators.Dtos.Categories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoShop.WebApi.Controllers
@@ -32,11 +33,23 @@ namespace AutoShop.WebApi.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto dto)
-            => Ok(await _service.CreateAsync(dto));
+        {
+            var createValidator = new CategoryCreateValidator();
+            var result = createValidator.Validate(dto);
+            if(result.IsValid) return Ok(await _service.CreateAsync(dto));  
+            else return BadRequest(result.Errors);
+        }
+            //=> Ok(await _service.CreateAsync(dto));
 
         [HttpPut("{categoryId}")]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto dto)
-            => Ok(await _service.UpdateAsync(categoryId, dto));
+        {
+            var updateValidator = new CategoryUpdateValidator();
+            var validationResult = updateValidator.Validate(dto);
+            if (validationResult.IsValid) return Ok(await _service.UpdateAsync(categoryId, dto));
+            else return BadRequest(validationResult.Errors);
+        }
+        //    => Ok(await _service.UpdateAsync(categoryId, dto));
 
 
         //[HttpDelete]
