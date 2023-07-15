@@ -21,5 +21,7 @@ public class Car : Auditable
     public string Description { get; set; } = string.Empty;
 
     public long CarID { get; set; }
+
+    public string Probeg { get; set; } = string.Empty;
 }
 

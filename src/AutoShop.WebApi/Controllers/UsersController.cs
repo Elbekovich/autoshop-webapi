@@ -20,7 +20,17 @@ namespace AutoShop.WebApi.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-            => Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        {
+            var response = Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
+
+            // Set the 'Access-Control-Allow-Origin' headerobs
+            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+            return response;
+
+        }
+        //=> Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
+
 
         [HttpGet("count")]
         public async Task<IActionResult> CountAsync()
