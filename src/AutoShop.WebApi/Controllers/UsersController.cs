@@ -2,14 +2,18 @@
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
 using AutoShop.Service.Validators.Dtos.Users;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoShop.WebApi.Controllers
 {
+    
+    
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
     {
+
         IUserService _userService;
         private IWebHostEnvironment _env;
         private readonly int maxPageSize = 30;
@@ -17,26 +21,26 @@ namespace AutoShop.WebApi.Controllers
         {
             this._userService = userService;
         }
-
+        [EnableCors("AllowOrigin")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
-        {
-            var response = Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        => Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        //{
+        //    var response = Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-            // Set the 'Access-Control-Allow-Origin' headerobs
-            Response.Headers.Add("Access-Control-Allow-Origin", "*");
+        //    // Set the 'Access-Control-Allow-Origin' headerobs
+        //    Response.Headers.Add("Access-Control-Allow-Origin", "*");
 
-            return response;
+        //    return response;
 
-        }
-        //=> Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
+        //}
 
-
+        [EnableCors("AllowOrigin")]
         [HttpGet("count")]
         public async Task<IActionResult> CountAsync()
             => Ok(await _userService.CountAsync());
 
-
+        [EnableCors("AllowOrigin")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] UserCreateDto userCreateDto)
         {
@@ -45,12 +49,13 @@ namespace AutoShop.WebApi.Controllers
             if (result.IsValid) return Ok(await _userService.CreateAsync(userCreateDto));
             else return BadRequest(result.Errors);
         }
-            //=> Ok(await _userService.CreateAsync(userCreateDto));
-
+        //=> Ok(await _userService.CreateAsync(userCreateDto));
+        [EnableCors("AllowOrigin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _userService.DeleteAsync(id));
 
+        [EnableCors("AllowOrigin")]
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] UserUpdateDto userUpdateDto)
         {
@@ -70,3 +75,4 @@ namespace AutoShop.WebApi.Controllers
         //=> Ok(await _userService.CountAsync());
     }
 }
+//[EnableCors("AllowOrigin")] shuni qoshib chiqdim 7/16/2023 15:03

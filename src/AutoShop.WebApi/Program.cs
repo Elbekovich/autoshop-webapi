@@ -23,8 +23,37 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+// cors bu frontdan backendga ulanish
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//        policy =>
+//        {
+//            policy.WithOrigins("http://localhost",
+//                "http://localhost:4200",
+//                "https://localhost:7230",
+//                "http://localhost:90"
+//                )
+//            .AllowAnyMethod()
+//            .AllowAnyHeader()
+//            .SetIsOriginAllowedToAllowWildcardSubdomains();
+//        });
+//});
 
-
+// Default Policy
+// Named Policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowOrigin",
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:44351", "http://localhost:4200")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+//bu yerda ulanish tugadi agar dastur xato ishlasa buni ochiraman
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,13 +63,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection(); 
+app.UseHttpsRedirection();
 
 
 app.UseStaticFiles();
-app.UseAuthorization(); 
+app.UseRouting(); //buni uzim qushdim
+//app.UseCors(MyAllowSpecificOrigins);
+//app.UseCors();
+// with a named pocili
+app.UseCors("AllowOrigin");
+app.UseAuthorization();
 app.MapControllers();
 
 
 
-app.Run(); 
+app.Run();
+
+

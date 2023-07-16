@@ -7,20 +7,16 @@ public class UserCreateValidator : AbstractValidator<UserCreateDto>
 {
     public UserCreateValidator()
     {
-        //RuleFor(dto => dto.Name).NotNull().NotEmpty().WithMessage("Name kiritish majburiy")
-        //    .MinimumLength(3).WithMessage("Name 3 ta belgidan kop bolishi kerak")
-        //    .MaximumLength(50).WithMessage("Name 50 ta belgidan kam bo'lishi kerak");
         RuleFor(dto => dto.FirstName).NotNull().NotEmpty().WithMessage("Nameni kiritish majburiy")
             .MinimumLength(3).WithMessage("Name 3 ta belgidan kop bolishi kerak")
             .MaximumLength(20).WithMessage("Name 20 ta belgidan kam bolishi kerak");
 
+
         RuleFor(dto => dto.LastName).NotNull().NotEmpty().WithMessage("Surnameni kiritish majburiy")
             .MinimumLength(5).WithMessage("Surname 5 ta belgidan kop bolishi kerak")
             .MaximumLength(20).WithMessage("Surname 20 ta belgidan kam bolishi kerak");
-
-        RuleFor(dto => dto.PhoneNumber).NotNull().NotEmpty().WithMessage("PhoneNumberni kiritish majburiy")
-            .MinimumLength(13).WithMessage("Number 13 ta boladi")
-            .MaximumLength(13).WithMessage("Number 13 ta boladi");
+        RuleFor(dto => dto.PhoneNumber).NotNull().NotEmpty().WithMessage("Telefon raqam kiritish majburiy")
+            .Must(phone => PhoneNumberValidator.IsValid(phone)).WithMessage("Telefon raqam to'g'ri kiritilmadi");
         
         RuleFor(dto => dto.PassportSerialNumber).NotNull().NotEmpty().WithMessage("Pasport seriasini kiritish majburiy")
             .MinimumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi")
