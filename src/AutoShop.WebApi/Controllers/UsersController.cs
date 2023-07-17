@@ -21,7 +21,7 @@ namespace AutoShop.WebApi.Controllers
         {
             this._userService = userService;
         }
-        [EnableCors("AllowOrigin")]
+        //[EnableCors("AllowOrigin")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
         => Ok(await _userService.GetAllAsync(new PaginationParams(page, maxPageSize)));
@@ -35,12 +35,12 @@ namespace AutoShop.WebApi.Controllers
 
         //}
 
-        [EnableCors("AllowOrigin")]
+        //[EnableCors("AllowOrigin")]
         [HttpGet("count")]
         public async Task<IActionResult> CountAsync()
             => Ok(await _userService.CountAsync());
 
-        [EnableCors("AllowOrigin")]
+        //[EnableCors("AllowOrigin")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] UserCreateDto userCreateDto)
         {
@@ -50,12 +50,12 @@ namespace AutoShop.WebApi.Controllers
             else return BadRequest(result.Errors);
         }
         //=> Ok(await _userService.CreateAsync(userCreateDto));
-        [EnableCors("AllowOrigin")]
+        //[EnableCors("AllowOrigin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _userService.DeleteAsync(id));
 
-        [EnableCors("AllowOrigin")]
+        //[EnableCors("AllowOrigin")]
         [HttpPut("{userId}")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] UserUpdateDto userUpdateDto)
         {

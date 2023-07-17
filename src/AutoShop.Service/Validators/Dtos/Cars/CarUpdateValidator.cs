@@ -1,15 +1,18 @@
 ﻿using AutoShop.Service.Common.Helpers;
 using AutoShop.Service.Dtos.Cars;
 using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AutoShop.Service.Validators.Dtos.Cars
 {
-    public class CarCreateValidator : AbstractValidator<CarCreateDto>
+    public class CarUpdateValidator : AbstractValidator<CarUpdateDto>
     {
-        public CarCreateValidator()
+        public CarUpdateValidator()
         {
-
-
             RuleFor(dto => dto.Name).NotNull().NotEmpty().WithMessage("Moshinani nameni kiriting")
             .MinimumLength(3).WithMessage("Name 3 ta belgidan kop bolishi kerak")
             .MaximumLength(50).WithMessage("Name 50 ta belgidan kam bo'lishi kerak");
@@ -44,16 +47,6 @@ namespace AutoShop.Service.Validators.Dtos.Cars
                 return MediaHelper.GetImageExtensions().Contains(fileInfo.Extension);
 
             }).WithMessage("Bu fayl turi rasm faylining turi emas");
-
-
-
-
-
-
-
-
-
-
         }
     }
 }

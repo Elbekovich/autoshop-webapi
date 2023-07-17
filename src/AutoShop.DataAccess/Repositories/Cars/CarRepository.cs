@@ -32,13 +32,16 @@ public class CarRepository : BaseRepository, ICarRepository
         try
         {
             await _connection.OpenAsync();
-            string query = "INSERT INTO public.cars(category_id, name, image_path, color, type, transmission_is_automatic, made_at, price, description,  created_at, updated_at, probeg)" +
-                "VALUES (@CategoryId, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description,  @CreatedAt, @UpdatedAt, @Probeg));";
+            //   string query = "INSERT INTO public.cars(category_id, name, image_path, color, type, transmission_is_automatic, made_at, price, description,  created_at, updated_at, probeg)" +
+            //"VALUES (@CategoryId, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description,  @CreatedAt, @UpdatedAt, @Probeg));";
+            string query = "INSERT INTO public.\"cars\"(category_id, name, image_path, color, type, transmission_is_automatic, made_at, price, description, created_at, updated_at, probeg) " +
+                "VALUES (@CategoryId, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description, @CreatedAt, @UpdatedAt, @Probeg);";
             var result = await _connection.ExecuteAsync(query, entity);
             return result;
         }
-        catch
+        catch(Exception ex) 
         {
+            
             return 0;
         }
         finally
@@ -112,9 +115,15 @@ public class CarRepository : BaseRepository, ICarRepository
         {
             await _connection.OpenAsync();
             //car id ni tashab ketganman agar xatolik bersa shu yerda
-            string query = $"UPDATE public.cars " +
-                $"SET category_id=@CategoryId, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg" +
+            //string query = $"UPDATE public.\"cars\" " +
+            //    $"SET category_id=@CategoryId, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg" +
+            //    $"WHERE id={id};";
+
+            string query = $"UPDATE public.\"cars\" " +
+                $"SET category_id=@CategoryId, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg " +
                 $"WHERE id={id};";
+
+
             var resUp = await _connection.ExecuteAsync(query, entity);
             return resUp;
         }
