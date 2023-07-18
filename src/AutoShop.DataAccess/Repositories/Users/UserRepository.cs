@@ -3,11 +3,6 @@ using AutoShop.DataAccess.Utils;
 using AutoShop.DataAccess.ViewModels.Users;
 using AutoShop.Domain.Entities.Users;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoShop.DataAccess.Repositories.Users
 {
@@ -26,26 +21,33 @@ namespace AutoShop.DataAccess.Repositories.Users
             finally { await _connection.CloseAsync(); }
         }
 
+        //public async Task<int> Register(User entity)
+        //{
+        //    try
+        //    {
+        //        await _connection.OpenAsync();
+        //        string query = "";
+        //    }
+        //}
+
         public async Task<int> CreateAsync(User entity)
         {
             try
             {
                 await _connection.OpenAsync();
-                string query = "INSERT INTO public.users(first_name, last_name, phone_number, phone_number_confirmed, passport_seria_number, is_male, birth_date, country, region, password_hash,salt,created_at, updated_at, role)" +
-                    "VALUES (@FirstName, " +
-                    "@LastName, " +
-                    "@PhoneNumber, " +
-                    "@PhoneNumberConfirmed, " +
-                    "@PassportSerialNumber, " +
-                    "@IsMale, " +
-                    "@BirthDate, " +
-                    "@Country, " +
-                    "@Region, " +
-                    "@PasswordHash," +
-                    "@Salt," +
-                    "@CreatedAt, " +
-                    "@UpdatedAt, " +
-                    "@Role);";
+                //string query = "INSERT INTO public.users(first_name, last_name, phone_number, birth_date, region, email, password_hash,salt,created_at, updated_at)" +
+                //    "VALUES (@FirstName, " +
+                //    "@LastName, " +
+                //    "@PhoneNumber, " +
+                //    "@BirthDate, " +
+                //    "@Region, " +
+                //    "@PasswordHash," +
+                //    "@Salt," +
+                //    "@CreatedAt, " +
+                //    "@Email" +
+                //    "@UpdatedAt);";
+                string query = "INSERT INTO public.users(first_name, last_name, phone_number, birth_date, region, password_hash, salt, created_at, updated_at, email)" +
+                    "VALUES (@FirstName, @LastName, @PhoneNumber, @BirthDate, @Region, @PasswordHash, @Salt, @CreatedAt, @UpdatedAt, @Email);";
                 var result = await _connection.ExecuteAsync(query, entity);
                 return result;
             }
@@ -120,20 +122,16 @@ namespace AutoShop.DataAccess.Repositories.Users
                     "first_name = @FirstName, " +
                     "last_name = @LastName, " +
                     "phone_number = @PhoneNumber, " +
-                    "phone_number_confirmed = @PhoneNumberConfirmed, " +
-                    "passport_seria_number = @PassportSerialNumber, " +
-                    "is_male = @IsMale, " +
                     "birth_date = @BirthDate, " +
-                    "country = @Country, " +
                     "region = @Region, " +
                     "password_hash = @PasswordHash, " +
                     "salt = @Salt, " +
                     "created_at = @CreatedAt, " +
                     "updated_at = @UpdatedAt, " +
-                    "role = @Role " +
+                    "email = @Email " +
                     "WHERE id = @Id";
 
-                entity.Id = id; // Set the ID of the entity to be updated
+                entity.Id = id; 
 
                 var result = await _connection.ExecuteAsync(query, entity);
 

@@ -7,6 +7,7 @@ using AutoShop.Service.Common.Helpers;
 using AutoShop.Service.Dtos.Cars;
 using AutoShop.Service.Interfaces.Cars;
 using AutoShop.Service.Interfaces.Common;
+using System.Data.Common;
 
 namespace AutoShop.Service.Services.Cars
 {
@@ -28,7 +29,7 @@ namespace AutoShop.Service.Services.Cars
             Car car = new Car()
             {
                 ImagePath = imagepath,
-                CategoryId = dto.CategoryId,
+                Category = dto.Category,
                 Name = dto.Name,
                 Color = dto.Color,
                 Type = dto.Type,
@@ -73,14 +74,32 @@ namespace AutoShop.Service.Services.Cars
             else return car;
         }
 
+        public async Task<IList<Car>> SearchAsync(string search, PaginationParams @params)
+        {
+            //throw new NotImplementedException();
+            //var car = await _repository.SearchAsync(search, @params);
+            //if (car is null) throw new CarNotFoundException();
+            //else return car;
+            var cars = await _repository.SearchAsync(search, @params);
+            int count = await _repository.SearchCountAsync(search);
+            return cars;
+            //return (count, cars);
+
+        }
+
+        public Task<int> SearchCountAsync(string search)
+        {
+            throw new NotImplementedException();
+            //var car = _repository.SearchCountAsync(search);
+
+        }
+
         public async Task<bool> UpdateAsync(long carId, CarUpdateDto dto)
         {
-            Car car = new Car();
-            //var car = await _repository.GetByIdAsync(carId);
-            //car = await _repository.GetByIdAsync(carId);
-            car = await _repository.GetByIdAsync(carId);
+            
+            var car = await _repository.GetByIdAsync(carId);
             if (car is null) throw new CarNotFoundException();
-            car.CategoryId = dto.CategoryId;
+            car.Category = dto.Category;
             car.Name = dto.Name;
             car.Color = dto.Color;
             car.Type = dto.Type;
@@ -89,6 +108,7 @@ namespace AutoShop.Service.Services.Cars
             car.Price = dto.Price;
             car.Description = dto.Description;   
             car.Probeg = dto.Probeg;
+            car.Manzil = dto.Manzil;
             if(dto.ImagePath is not null)
             {
                 var deleteRes = await _fileService.DeleteImageAsync(car.ImagePath);

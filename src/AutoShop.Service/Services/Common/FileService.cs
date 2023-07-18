@@ -41,18 +41,6 @@ public class FileService : IFileService
     }
     public async Task<string> UploadImageAsync(IFormFile image)
     {
-        //string newImageName = MediaHelper.MakeImagName(image.FileName);
-        //string subpath = Path.Combine(MEDIA, IMAGES, newImageName);
-        //string path = Path.Combine(ROOTPATH, subpath);
-
-        //Directory.CreateDirectory(Path.GetDirectoryName(path)); // Create directories if they don't exist
-
-        //using (var stream = new FileStream(path, FileMode.Create))
-        //{
-        //    await image.CopyToAsync(stream);
-        //}
-
-        //return subpath;
         string newImageName = MediaHelper.MakeImagName(image.FileName);
         string subpath = Path.Combine(MEDIA, IMAGES, newImageName);
         string path = Path.Combine(ROOTPATH, subpath);

@@ -17,5 +17,8 @@ namespace AutoShop.Service.Interfaces.Cars
         public Task<Car> GetByIdAsync(long carId);
 
         public Task<bool> UpdateAsync(long  carId, CarUpdateDto dto);
+
+        public Task<IList<Car>> SearchAsync(string search, PaginationParams @params);
+        public Task<int> SearchCountAsync(string search);
     }
 }

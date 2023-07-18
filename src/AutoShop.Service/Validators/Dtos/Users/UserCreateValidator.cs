@@ -18,13 +18,13 @@ public class UserCreateValidator : AbstractValidator<UserCreateDto>
         RuleFor(dto => dto.PhoneNumber).NotNull().NotEmpty().WithMessage("Telefon raqam kiritish majburiy")
             .Must(phone => PhoneNumberValidator.IsValid(phone)).WithMessage("Telefon raqam to'g'ri kiritilmadi");
         
-        RuleFor(dto => dto.PassportSerialNumber).NotNull().NotEmpty().WithMessage("Pasport seriasini kiritish majburiy")
-            .MinimumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi")
-            .MaximumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi");
+        //RuleFor(dto => dto.PassportSerialNumber).NotNull().NotEmpty().WithMessage("Pasport seriasini kiritish majburiy")
+        //    .MinimumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi")
+        //    .MaximumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi");
 
-        RuleFor(dto => dto.Country).NotNull().NotEmpty().WithMessage("Country kiritish majburiy")
-            .MinimumLength(3).WithMessage("Country 3 ta belgidan kop bolishi kerak")
-            .MaximumLength(20).WithMessage("Country 20 ta belgidan kam bolishi kerak");
+        //RuleFor(dto => dto.Country).NotNull().NotEmpty().WithMessage("Country kiritish majburiy")
+        //    .MinimumLength(3).WithMessage("Country 3 ta belgidan kop bolishi kerak")
+        //    .MaximumLength(20).WithMessage("Country 20 ta belgidan kam bolishi kerak");
 
         RuleFor(dto => dto.Region).NotNull().NotEmpty().WithMessage("Region kiritish majburiy")
             .MinimumLength(3).WithMessage("Region 3 ta belgidan kop bolishi kerak")

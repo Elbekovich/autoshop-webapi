@@ -1,4 +1,6 @@
-﻿using AutoShop.DataAccess.Interfaces.Cars;
+﻿using AutoShop.DataAccess.Common.Interfaces;
+using AutoShop.DataAccess.Interfaces;
+using AutoShop.DataAccess.Interfaces.Cars;
 using AutoShop.DataAccess.Utils;
 using AutoShop.Domain.Entities.Cars;
 using Dapper;
@@ -28,18 +30,15 @@ public class CarRepository : BaseRepository, ICarRepository
 
     public async Task<int> CreateAsync(Car entity)
     {
-        //throw new NotImplementedException();
         try
         {
             await _connection.OpenAsync();
-            //   string query = "INSERT INTO public.cars(category_id, name, image_path, color, type, transmission_is_automatic, made_at, price, description,  created_at, updated_at, probeg)" +
-            //"VALUES (@CategoryId, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description,  @CreatedAt, @UpdatedAt, @Probeg));";
-            string query = "INSERT INTO public.\"cars\"(category_id, name, image_path, color, type, transmission_is_automatic, made_at, price, description, created_at, updated_at, probeg) " +
-                "VALUES (@CategoryId, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description, @CreatedAt, @UpdatedAt, @Probeg);";
+            string query = "INSERT INTO public.\"cars\"(category, name, image_path, color, type, transmission_is_automatic, made_at, price, description, created_at, updated_at, probeg, manzil) " +
+                "VALUES (@Category, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description, @CreatedAt, @UpdatedAt, @Probeg, @Manzil);";
             var result = await _connection.ExecuteAsync(query, entity);
             return result;
         }
-        catch(Exception ex) 
+        catch
         {
             
             return 0;
@@ -52,7 +51,6 @@ public class CarRepository : BaseRepository, ICarRepository
 
     public async Task<int> DeleteAsync(long id)
     {
-        //throw new NotImplementedException();
         try
         {
             await _connection.OpenAsync();
@@ -103,27 +101,53 @@ public class CarRepository : BaseRepository, ICarRepository
         finally { await _connection.CloseAsync(); }
     }
 
-    public Task<(int ItemsCount, IList<Car>)> SearchAsync(string search, PaginationParams @params)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<int> UpdateAsync(long id, Car entity)
+    public async Task<IList<Car>> SearchAsync(string search, PaginationParams @params)
     {
         //throw new NotImplementedException();
         try
         {
             await _connection.OpenAsync();
-            //car id ni tashab ketganman agar xatolik bersa shu yerda
-            //string query = $"UPDATE public.\"cars\" " +
-            //    $"SET category_id=@CategoryId, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg" +
-            //    $"WHERE id={id};";
+            string query = $"SELECT * FROM public.cars WHERE name ILIKE '%{search}%' ORDER BY id DESC OFFSET {@params.SkipCount} LIMIT {@params.PageSize}";
+            var cars = await _connection.QueryAsync<Car>(query);
+            return cars.ToList();
+        }
+        catch
+        {
+            return new List<Car>();
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
 
-            string query = $"UPDATE public.\"cars\" " +
-                $"SET category_id=@CategoryId, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg " +
-                $"WHERE id={id};";
+    public async Task<int> SearchCountAsync(string search)
+    {
+        //throw new NotImplementedException();
+        try
+        {
+            await _connection.OpenAsync();
+            string query = $"SELECT COUNT(*) FROM public.cars WHERE name ILIKE '%{search}%'";
+            var count = await _connection.ExecuteScalarAsync<int>(query);
+            return count;
+        }
+        catch
+        {
+            return 0;
+        }
+        finally
+        {
+            await _connection.CloseAsync();
+        }
+    }
 
-
+    public async Task<int> UpdateAsync(long id, Car entity)
+    {
+        try
+        {
+            await _connection.OpenAsync();
+            string query = $"UPDATE public.cars SET category=@Category, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg, manzil=@Manzil " +
+                $"WHERE id = {id};";
             var resUp = await _connection.ExecuteAsync(query, entity);
             return resUp;
         }

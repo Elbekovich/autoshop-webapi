@@ -2,7 +2,6 @@
 using AutoShop.Service.Dtos.Cars;
 using AutoShop.Service.Interfaces.Cars;
 using AutoShop.Service.Validators.Dtos.Cars;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoShop.WebApi.Controllers
@@ -20,22 +19,30 @@ namespace AutoShop.WebApi.Controllers
             this._service = service;
         }
 
-        //[EnableCors("AllowOrigin")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync([FromQuery] int page = 1)
             => Ok(await _service.GetAllAsync(new PaginationParams(page, maxPageSize)));
 
-        //[EnableCors("AllowOrigin")]
         [HttpGet("{carId}")]
         public async Task<IActionResult> GetByIdAsync(long carId)
             => Ok(await _service.GetByIdAsync(carId));
 
-        //[EnableCors("AllowOrigin")]
+
+
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
+            => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
+
+
+
+
+
+
         [HttpGet("count")]
         public async Task<IActionResult> CountAsync()
             => Ok(await _service.CountAsync());
 
-        //[EnableCors("AllowOrigin")]
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] CarCreateDto dto)
         {
@@ -46,7 +53,6 @@ namespace AutoShop.WebApi.Controllers
             
         }
 
-        //[EnableCors("AllowOrigin")]
         [HttpPut("{carId}")]
         public async Task<IActionResult> UpdateAsync(long carId, [FromForm] CarUpdateDto dto)
         {
@@ -56,7 +62,6 @@ namespace AutoShop.WebApi.Controllers
             else return BadRequest(result.Errors);
         }
         
-        //[EnableCors("AllowOrigin")]
         [HttpDelete("{carId}")]
         public async Task<IActionResult> DeleteAsync(long carId)
             => Ok(await _service.DeleteAsync(carId));

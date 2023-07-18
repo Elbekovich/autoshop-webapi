@@ -2,7 +2,7 @@
 
 public class Car : Auditable
 {
-    public long CategoryId { get; set; }
+    public string Category { get; set; } = string.Empty;
 
     public string Name { get; set; } = string.Empty;
 
@@ -12,7 +12,7 @@ public class Car : Auditable
 
     public string Type { get; set; } = string.Empty;
 
-    public bool TransmissionIsAutomatic { get; set; }
+    public string TransmissionIsAutomatic { get; set; } = string.Empty;
 
     public DateTime MadeAt { get; set; }
 
@@ -23,5 +23,8 @@ public class Car : Auditable
     //public long CarID { get; set; }
 
     public string Probeg { get; set; } = string.Empty;
+
+    public string Manzil { get; set; } = string.Empty;
+
 }
 

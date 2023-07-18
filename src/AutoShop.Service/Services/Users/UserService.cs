@@ -36,18 +36,19 @@ public class UserService : IUserService
             FirstName = userCreateDto.FirstName,
             LastName = userCreateDto.LastName,
             PhoneNumber = userCreateDto.PhoneNumber,
-            PhoneNumberConfirmed = userCreateDto.PhoneNumberConfirmed,
-            PassportSerialNumber = userCreateDto.PassportSerialNumber,
-            IsMale = userCreateDto.IsMale,
+            //PhoneNumberConfirmed = userCreateDto.PhoneNumberConfirmed,
+            //PassportSerialNumber = userCreateDto.PassportSerialNumber,
+            //IsMale = userCreateDto.IsMale,
             BirthDate = userCreateDto.BirthDate,
-            Country = userCreateDto.Country,
+            //Country = userCreateDto.Country,
             Region = userCreateDto.Region,
             PasswordHash = userCreateDto.PasswordHash,
+            Email = userCreateDto.Email,
             
             //Salt = userCreateDto.Salt,
             CreatedAt = TimeHelper.GetDateTime(),
             UpdatedAt = TimeHelper.GetDateTime(),
-            Role = userCreateDto.Role,
+            //Role = userCreateDto.Role,
 
         };
         var hashres = PasswordHasher.Hash(us.PasswordHash);
@@ -82,11 +83,11 @@ public class UserService : IUserService
         userss.FirstName = userUpdateDto.FirstName;
         userss.LastName = userUpdateDto.LastName;
         userss.PhoneNumber = userUpdateDto.PhoneNumber;
-        userss.PhoneNumberConfirmed = userUpdateDto.PhoneNumberConfirmed;
-        userss.PassportSerialNumber = userUpdateDto.PassportSerialNumber;
-        userss.IsMale = userUpdateDto.IsMale;
+        //userss.PhoneNumberConfirmed = userUpdateDto.PhoneNumberConfirmed;
+        //userss.PassportSerialNumber = userUpdateDto.PassportSerialNumber;
+        //userss.IsMale = userUpdateDto.IsMale;
         userss.BirthDate = userUpdateDto.BirthDate;
-        userss.Country = userUpdateDto.Country;
+        //userss.Country = userUpdateDto.Country;
         userss.Region = userUpdateDto.Region;
         userss.PasswordHash = userUpdateDto.PasswordHash;
 
@@ -97,7 +98,7 @@ public class UserService : IUserService
 
         //userss.Salt = userUpdateDto.Salt;
         userss.UpdatedAt = TimeHelper.GetDateTime();
-        userss.Role = userss.Role;
+        //userss.Role = userss.Role;
         var rbResult = await _userRepository.UpdateAsync(id, userss);
         return rbResult > 0;
     }

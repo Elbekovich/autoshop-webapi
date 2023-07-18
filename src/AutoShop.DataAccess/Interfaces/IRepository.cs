@@ -1,4 +1,7 @@
-﻿namespace AutoShop.DataAccess.Interfaces;
+﻿using AutoShop.DataAccess.Utils;
+using AutoShop.Domain.Entities.Cars;
+
+namespace AutoShop.DataAccess.Interfaces;
 
 public interface IRepository<TEntity, TViewModel>
 {
@@ -8,8 +11,7 @@ public interface IRepository<TEntity, TViewModel>
 
     public Task<int> DeleteAsync(long id);
 
-    public Task<TViewModel?> GetByIdAsync(long id);
-
     public Task<long> CountAsync();
 
+    public Task<TViewModel?> GetByIdAsync(long id);
 }

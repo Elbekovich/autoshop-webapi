@@ -4,7 +4,7 @@ namespace AutoShop.Service.Dtos.Cars
 {
     public class CarUpdateDto
     {
-        public long CategoryId { get; set; }
+        public string Category { get; set; } = string.Empty;
 
         public string Name { get; set; } = String.Empty;
 
@@ -14,7 +14,7 @@ namespace AutoShop.Service.Dtos.Cars
 
         public string Type { get; set; } = String.Empty;
 
-        public bool TransmissionIsAutomatic { get; set; }
+        public string TransmissionIsAutomatic { get; set; } = string.Empty;
 
         public DateTime MadeAt { get; set; }
 
@@ -23,5 +23,7 @@ namespace AutoShop.Service.Dtos.Cars
         public string Description { get; set; } = String.Empty;
 
         public string Probeg { get; set; } = String.Empty;
+
+        public string Manzil { get; set; } = string.Empty;
     }
 }
