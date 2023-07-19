@@ -101,9 +101,9 @@ public class CarRepository : BaseRepository, ICarRepository
         finally { await _connection.CloseAsync(); }
     }
 
+
     public async Task<IList<Car>> SearchAsync(string search, PaginationParams @params)
     {
-        //throw new NotImplementedException();
         try
         {
             await _connection.OpenAsync();
@@ -123,7 +123,6 @@ public class CarRepository : BaseRepository, ICarRepository
 
     public async Task<int> SearchCountAsync(string search)
     {
-        //throw new NotImplementedException();
         try
         {
             await _connection.OpenAsync();
@@ -159,5 +158,16 @@ public class CarRepository : BaseRepository, ICarRepository
         {
             await _connection.CloseAsync();
         }
+    }
+
+
+    public async Task<IList<Car>> GetCarsByCategory(string category)
+    {
+        //throw new NotImplementedException();
+        string query = "SELECT * FROM cars WHERE category = @Category";
+        var parameters = new { Category = category };
+        //var cars = await _connection.QueryAsync<Car>(query, parameters);
+        var cars = await _connection.QueryAsync<Car>(query, parameters);
+        return cars.ToList();
     }
 }

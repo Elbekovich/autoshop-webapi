@@ -15,7 +15,4 @@ public interface IUserRepository : IRepository<User, User>, IGetAll<User>, ISear
 
     public Task<IList<Car>> GetUserCarsAsync(long userId);
 
-    //bu userni quygan elonlarini ko'rish uchun ishlatiladi
-    //public Task<IList<Car>> GetUserCarsAsync(long userId);
-
 }

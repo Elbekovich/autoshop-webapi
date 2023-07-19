@@ -174,36 +174,11 @@ namespace AutoShop.DataAccess.Repositories.Users
 
         public async Task<IList<Car>> GetUserCarsAsync(long userId)
         {
-            //throw new NotImplementedException();
-            //string query = @"SELECT * FROM cars WHERE user_id = @UserId";
-
-            //var cars = await _connection.QueryAsync<Car>(query, new { UserId = userId });
-
-            //foreach (var car in cars)
-            //{
-            //    //var user = await GetUserByIdAsync(car.UserId);
-            //    var user = await GetUserByIdAsync(car.UserId);
-            //    car.User = user;
-            //    //car.UserId = user.Id;
-            //}
-
-            //return cars.ToList();
-
             string query = @"SELECT * FROM cars WHERE user_id = @UserId";
 
             var cars = await _connection.QueryAsync<Car>(query, new { UserId = userId });
 
             return cars.ToList();
-
-
         }
-        //private async Task<User> GetUserByIdAsync(long userId)
-        //{
-        //    string query = @"SELECT * FROM users WHERE id = @UserId";
-
-        //    var user = await _connection.QueryFirstOrDefaultAsync<User>(query, new { UserId = userId });
-
-        //    return user;
-        //}
     }
 }

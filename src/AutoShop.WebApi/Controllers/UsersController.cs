@@ -3,13 +3,12 @@ using AutoShop.DataAccess.Utils;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
 using AutoShop.Service.Validators.Dtos.Users;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AutoShop.WebApi.Controllers
 {
-    
-    
+
+
     [Route("api/users")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -44,7 +43,6 @@ namespace AutoShop.WebApi.Controllers
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _userService.DeleteAsync(id));
 
-        //[EnableCors("AllowOrigin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] UserUpdateDto userUpdateDto)
         {
@@ -54,11 +52,9 @@ namespace AutoShop.WebApi.Controllers
             else return BadRequest(vrResult.Errors);
         }
 
-
         [HttpGet("Login")]
         public async Task<IActionResult> LoginUser(string username, string password)=>
             Ok(await _userService.LoginUser(username, password));
-
 
         [HttpGet("{userId}/cars")]
         public async Task<IActionResult> GetCarsByUserId(long userId)

@@ -1,4 +1,7 @@
-﻿using AutoShop.DataAccess.Utils;
+﻿using AutoShop.DataAccess.Interfaces.Cars;
+using AutoShop.DataAccess.Interfaces.Users;
+using AutoShop.DataAccess.Utils;
+using AutoShop.Domain.Entities.Cars;
 using AutoShop.Service.Dtos.Cars;
 using AutoShop.Service.Interfaces.Cars;
 using AutoShop.Service.Validators.Dtos.Cars;
@@ -10,13 +13,16 @@ namespace AutoShop.WebApi.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
+        private readonly ICarRepository _carRepository;
         private IWebHostEnvironment _env;
         private ICarService _service;
+        
         private readonly int maxPageSize = 30;
 
-        public CarsController(ICarService service)
+        public CarsController(ICarService service, ICarRepository carRepository)
         {
             this._service = service;
+            this._carRepository = carRepository;    
         }
 
         [HttpGet]
@@ -65,6 +71,14 @@ namespace AutoShop.WebApi.Controllers
         [HttpDelete("{carId}")]
         public async Task<IActionResult> DeleteAsync(long carId)
             => Ok(await _service.DeleteAsync(carId));
+
+
+        [HttpGet("byCategory/{category}")]
+        public async Task<ActionResult<IList<Car>>> GetCarsByCategory(string category)
+        {
+            var cars = await _carRepository.GetCarsByCategory(category);
+            return Ok(cars);
+        }
 
     }
 }

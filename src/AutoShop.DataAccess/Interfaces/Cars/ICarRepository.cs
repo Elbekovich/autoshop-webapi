@@ -10,4 +10,7 @@ public interface ICarRepository : IRepository<Car, Car>, IGetAll<Car>, ISearchab
     public Task<IList<Car>> SearchAsync(string search, PaginationParams @params);
     public Task<int> SearchCountAsync(string search);
 
+    //bu mashinalarni categoryga bo'lishga yordam beradi 
+    public Task<IList<Car>> GetCarsByCategory(string category);
+
 }
