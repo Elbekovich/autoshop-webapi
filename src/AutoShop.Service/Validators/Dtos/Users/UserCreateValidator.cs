@@ -17,22 +17,19 @@ public class UserCreateValidator : AbstractValidator<UserCreateDto>
             .MaximumLength(20).WithMessage("Surname 20 ta belgidan kam bolishi kerak");
         RuleFor(dto => dto.PhoneNumber).NotNull().NotEmpty().WithMessage("Telefon raqam kiritish majburiy")
             .Must(phone => PhoneNumberValidator.IsValid(phone)).WithMessage("Telefon raqam to'g'ri kiritilmadi");
-        
-        //RuleFor(dto => dto.PassportSerialNumber).NotNull().NotEmpty().WithMessage("Pasport seriasini kiritish majburiy")
-        //    .MinimumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi")
-        //    .MaximumLength(9).WithMessage("Passpord seriasi 9 ta belgi boladi");
 
-        //RuleFor(dto => dto.Country).NotNull().NotEmpty().WithMessage("Country kiritish majburiy")
-        //    .MinimumLength(3).WithMessage("Country 3 ta belgidan kop bolishi kerak")
-        //    .MaximumLength(20).WithMessage("Country 20 ta belgidan kam bolishi kerak");
+        RuleFor(dto => dto.Email).NotEmpty().NotEmpty().WithMessage("Email is required bro!")
+            .Must(email => EmailValidator.isValid(email)).WithMessage("Email is in correct!");
 
         RuleFor(dto => dto.Region).NotNull().NotEmpty().WithMessage("Region kiritish majburiy")
             .MinimumLength(3).WithMessage("Region 3 ta belgidan kop bolishi kerak")
             .MaximumLength(20).WithMessage("Region 20 ta belgidan kam bolishi kerak");
 
         RuleFor(dto => dto.PasswordHash).NotNull().NotEmpty().WithMessage("Password kiritish majburiy")
-            .MinimumLength(3).WithMessage("Password 8 ta belgidan kop bolishi kerak")
-            .MaximumLength(20).WithMessage("Password 20 ta belgidan kam bolishi kerak");
+            .Must(password => PasswordValidator.IsStrongPassword(password).isValiid).WithMessage("Password togri kelmadi!");
+        //
+        //.MinimumLength(3).WithMessage("Password 8 ta belgidan kop bolishi kerak")
+        //.MaximumLength(20).WithMessage("Password 20 ta belgidan kam bolishi kerak");
 
         
     }

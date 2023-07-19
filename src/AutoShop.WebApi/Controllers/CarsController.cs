@@ -1,5 +1,4 @@
 ﻿using AutoShop.DataAccess.Interfaces.Cars;
-using AutoShop.DataAccess.Interfaces.Users;
 using AutoShop.DataAccess.Utils;
 using AutoShop.Domain.Entities.Cars;
 using AutoShop.Service.Dtos.Cars;
@@ -33,17 +32,9 @@ namespace AutoShop.WebApi.Controllers
         public async Task<IActionResult> GetByIdAsync(long carId)
             => Ok(await _service.GetByIdAsync(carId));
 
-
-
-
         [HttpGet("search")]
         public async Task<IActionResult> SearchAsync([FromQuery] string search, [FromQuery] int page = 1)
             => Ok(await _service.SearchAsync(search, new PaginationParams(page, maxPageSize)));
-
-
-
-
-
 
         [HttpGet("count")]
         public async Task<IActionResult> CountAsync()
