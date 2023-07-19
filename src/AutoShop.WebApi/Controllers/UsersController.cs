@@ -51,5 +51,14 @@ namespace AutoShop.WebApi.Controllers
             if (vrResult.IsValid) return Ok(await _userService.UpdateAsync(id, userUpdateDto));
             else return BadRequest(vrResult.Errors);
         }
+
+
+        [HttpGet("Login")]
+        public async Task<IActionResult> LoginUser(string username, string password)=>
+            Ok(await _userService.LoginUser(username, password));   
+            
+
+        
+
     }
 }

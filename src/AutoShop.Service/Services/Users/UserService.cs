@@ -1,18 +1,11 @@
 ﻿using AutoShop.DataAccess.Interfaces.Users;
 using AutoShop.DataAccess.Utils;
-using AutoShop.Domain.Entities.Categories;
 using AutoShop.Domain.Entities.Users;
-using AutoShop.Domain.Exceptions.Categories;
 using AutoShop.Domain.Exceptions.Users;
 using AutoShop.Service.Common.Helpers;
 using AutoShop.Service.Common.Security;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoShop.Service.Services.Users;
 
@@ -24,9 +17,28 @@ public class UserService : IUserService
     {
         this._userRepository = userRepository;
     }
-    
+
     public async Task<long> CountAsync() => await _userRepository.CountAsync();
-    
+
+    public async Task<bool> LoginUser(string email, string password)
+    {
+        //throw new NotImplementedException();
+        var user = await _userRepository.GetUserByEmail(email);
+
+        if (user != null)
+        {
+            //bool isPasswordCorrect = PasswordHelper.VerifyPassword(password, user.PasswordHash, user.Salt);
+            bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
+
+            if (isPasswordCorrect)
+            {
+                return true; // Foydalanuvchi muvaffaqiyatli kirish qilgan
+            }
+        }
+
+        return false;
+    }
+
 
     public async Task<bool> CreateAsync(UserCreateDto userCreateDto)
     {
@@ -74,6 +86,7 @@ public class UserService : IUserService
         var userss = await _userRepository.GetAllAsync(@params);
         return userss;
     }
+
 
     public async Task<bool> UpdateAsync(long id, UserUpdateDto userUpdateDto)
     {

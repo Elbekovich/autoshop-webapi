@@ -15,4 +15,6 @@ public interface IUserService
     public Task<IList<User>> GetAllAsync(PaginationParams @params);
 
     public Task<bool> UpdateAsync(long id, UserUpdateDto userUpdateDto);
+
+    public Task<bool> LoginUser(string email, string password);
 }

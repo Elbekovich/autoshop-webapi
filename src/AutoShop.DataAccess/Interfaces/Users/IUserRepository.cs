@@ -10,4 +10,6 @@ public interface IUserRepository : IRepository<User, User>, IGetAll<User>, ISear
 
     public Task<bool> LoginAsync(string email, string password);
 
+    public Task<User> GetUserByEmail(string email);
+
 }

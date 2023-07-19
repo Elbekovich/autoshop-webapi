@@ -3,11 +3,22 @@ using AutoShop.DataAccess.Utils;
 using AutoShop.DataAccess.ViewModels.Users;
 using AutoShop.Domain.Entities.Users;
 using Dapper;
+using System.Data;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AutoShop.DataAccess.Repositories.Users
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
+
+        //private readonly IDbConnection _dbConnection;
+
+        //public UserRepository(IDbConnection dbConnection)
+        //{
+        //    _dbConnection = dbConnection;
+        //}
+
+
         public async Task<long> CountAsync()
         {
             try
@@ -87,9 +98,47 @@ namespace AutoShop.DataAccess.Repositories.Users
             throw new NotImplementedException();
         }
 
-        public Task<bool> LoginAsync(string email, string password)
+
+        public async Task<bool> LoginAsync(string email, string password)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                bool lamp = false;
+                string query = $"select password_hash from public.users where email='{email}';";
+                if(email != null)
+                {
+                
+                    if (password.ToString() == query.ToString())
+                    {
+                        lamp = true;
+                    }
+                    else if (password.ToString() != query.ToString())
+                    {
+                        
+                        lamp= false;
+                    }
+
+                    
+
+                    return lamp;
+                }
+                else
+                {
+                    return lamp;
+                }
+
+            }
+            catch
+            {
+                return false;
+                
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
         }
 
         public Task<(int ItemsCount, IList<User>)> SearchAsync(string search, PaginationParams @params)
@@ -130,29 +179,12 @@ namespace AutoShop.DataAccess.Repositories.Users
                 await _connection.CloseAsync();
             }
         }
-
-        public async Task<User> UserLogin(string userName, string password)
+        public async Task<User> GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
-            //try
-            //{
-            //    await _connection.OpenAsync();
-            //    string query = "select * from public.users where email='jumakulovozodbek007@gmail.com';";
-            //    if(userName != null)
-            //    {
-
-            //    }
-            //    //select password_hash from public.users where email='jumakulovozodbek007@gmail.com';
-
-            //}
-            //catch
-            //{
-            //    return 0;
-            //}
-            //finally
-            //{
-            //    await _connection.CloseAsync();
-            //}
+            string query = "SELECT * FROM Users WHERE Email = @Email";
+            var parameters = new { Email = email };
+            var result = await _connection.QueryFirstOrDefaultAsync<User>(query, parameters);
+            return result;
         }
     }
 }
