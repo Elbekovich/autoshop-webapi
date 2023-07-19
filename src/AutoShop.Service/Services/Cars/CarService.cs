@@ -29,7 +29,7 @@ namespace AutoShop.Service.Services.Cars
             Car car = new Car()
             {
                 ImagePath = imagepath,
-                Category = dto.Category,
+                Category = dto.Category.ToUpper(), // bu yerda dto.Category.ToUpper() deganimning sababi databazaga katta harflar bilan yozadi ken category buyicha bulish uchun
                 Name = dto.Name,
                 Color = dto.Color,
                 Type = dto.Type,
@@ -100,7 +100,7 @@ namespace AutoShop.Service.Services.Cars
             
             var car = await _repository.GetByIdAsync(carId);
             if (car is null) throw new CarNotFoundException();
-            car.Category = dto.Category;
+            car.Category = dto.Category.ToUpper(); // bu yerda ham categoryni katta harfga otqazib qoyadi
             car.Name = dto.Name;
             car.Color = dto.Color;
             car.Type = dto.Type;

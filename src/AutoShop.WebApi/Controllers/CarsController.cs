@@ -76,7 +76,7 @@ namespace AutoShop.WebApi.Controllers
         [HttpGet("byCategory/{category}")]
         public async Task<ActionResult<IList<Car>>> GetCarsByCategory(string category)
         {
-            var cars = await _carRepository.GetCarsByCategory(category);
+            var cars = await _carRepository.GetCarsByCategory(category.ToUpper());
             return Ok(cars);
         }
 
