@@ -20,7 +20,7 @@ public class User : Auditable
 
     //public bool IsMale { get; set; }
 
-    public DateTime BirthDate { get; set; }
+    //public DateTime BirthDate { get; set; }
 
     //public string Country { get; set; } = string.Empty;
 

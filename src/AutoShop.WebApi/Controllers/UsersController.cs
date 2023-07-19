@@ -43,7 +43,7 @@ namespace AutoShop.WebApi.Controllers
             => Ok(await _userService.DeleteAsync(id));
 
         //[EnableCors("AllowOrigin")]
-        [HttpPut("{userId}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(long id, [FromForm] UserUpdateDto userUpdateDto)
         {
             var updateValidator = new UserUpdateValidator();

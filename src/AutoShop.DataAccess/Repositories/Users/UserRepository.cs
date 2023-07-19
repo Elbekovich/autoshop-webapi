@@ -21,33 +21,13 @@ namespace AutoShop.DataAccess.Repositories.Users
             finally { await _connection.CloseAsync(); }
         }
 
-        //public async Task<int> Register(User entity)
-        //{
-        //    try
-        //    {
-        //        await _connection.OpenAsync();
-        //        string query = "";
-        //    }
-        //}
-
         public async Task<int> CreateAsync(User entity)
         {
             try
             {
                 await _connection.OpenAsync();
-                //string query = "INSERT INTO public.users(first_name, last_name, phone_number, birth_date, region, email, password_hash,salt,created_at, updated_at)" +
-                //    "VALUES (@FirstName, " +
-                //    "@LastName, " +
-                //    "@PhoneNumber, " +
-                //    "@BirthDate, " +
-                //    "@Region, " +
-                //    "@PasswordHash," +
-                //    "@Salt," +
-                //    "@CreatedAt, " +
-                //    "@Email" +
-                //    "@UpdatedAt);";
-                string query = "INSERT INTO public.users(first_name, last_name, phone_number, birth_date, region, password_hash, salt, created_at, updated_at, email)" +
-                    "VALUES (@FirstName, @LastName, @PhoneNumber, @BirthDate, @Region, @PasswordHash, @Salt, @CreatedAt, @UpdatedAt, @Email);";
+                string query = "INSERT INTO public.users(first_name, last_name, phone_number, region, password_hash, salt, created_at, updated_at, email)" +
+                    "VALUES (@FirstName, @LastName, @PhoneNumber, @Region, @PasswordHash, @Salt, @CreatedAt, @UpdatedAt, @Email);";
                 var result = await _connection.ExecuteAsync(query, entity);
                 return result;
             }
@@ -107,6 +87,11 @@ namespace AutoShop.DataAccess.Repositories.Users
             throw new NotImplementedException();
         }
 
+        public Task<bool> LoginAsync(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<(int ItemsCount, IList<User>)> SearchAsync(string search, PaginationParams @params)
         {
             throw new NotImplementedException();
@@ -122,7 +107,6 @@ namespace AutoShop.DataAccess.Repositories.Users
                     "first_name = @FirstName, " +
                     "last_name = @LastName, " +
                     "phone_number = @PhoneNumber, " +
-                    "birth_date = @BirthDate, " +
                     "region = @Region, " +
                     "password_hash = @PasswordHash, " +
                     "salt = @Salt, " +
@@ -145,6 +129,30 @@ namespace AutoShop.DataAccess.Repositories.Users
             {
                 await _connection.CloseAsync();
             }
+        }
+
+        public async Task<User> UserLogin(string userName, string password)
+        {
+            throw new NotImplementedException();
+            //try
+            //{
+            //    await _connection.OpenAsync();
+            //    string query = "select * from public.users where email='jumakulovozodbek007@gmail.com';";
+            //    if(userName != null)
+            //    {
+
+            //    }
+            //    //select password_hash from public.users where email='jumakulovozodbek007@gmail.com';
+
+            //}
+            //catch
+            //{
+            //    return 0;
+            //}
+            //finally
+            //{
+            //    await _connection.CloseAsync();
+            //}
         }
     }
 }

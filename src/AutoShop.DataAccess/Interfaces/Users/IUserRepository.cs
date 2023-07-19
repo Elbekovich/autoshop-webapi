@@ -7,4 +7,7 @@ namespace AutoShop.DataAccess.Interfaces.Users;
 public interface IUserRepository : IRepository<User, User>, IGetAll<User>, ISearchable<User>
 {
     public Task<UserViewModel> GetUserAsync(long id);
+
+    public Task<bool> LoginAsync(string email, string password);
+
 }

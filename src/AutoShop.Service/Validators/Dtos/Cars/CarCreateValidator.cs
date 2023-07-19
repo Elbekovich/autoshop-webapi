@@ -45,15 +45,6 @@ namespace AutoShop.Service.Validators.Dtos.Cars
 
             }).WithMessage("Bu fayl turi rasm faylining turi emas");
 
-
-
-
-
-
-
-
-
-
         }
     }
 }

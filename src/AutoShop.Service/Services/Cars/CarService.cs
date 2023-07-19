@@ -41,6 +41,7 @@ namespace AutoShop.Service.Services.Cars
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime(),
                 Probeg = dto.Probeg,
+                UserId = dto.UserId,
             };
             var result = await _repository.CreateAsync(car);
             return result > 0;
@@ -109,6 +110,8 @@ namespace AutoShop.Service.Services.Cars
             car.Description = dto.Description;   
             car.Probeg = dto.Probeg;
             car.Manzil = dto.Manzil;
+            
+            
             if(dto.ImagePath is not null)
             {
                 var deleteRes = await _fileService.DeleteImageAsync(car.ImagePath);

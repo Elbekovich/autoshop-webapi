@@ -26,5 +26,7 @@ namespace AutoShop.Service.Dtos.Cars
         public string Probeg { get; set; } = string.Empty;
 
         public string Manzil { get; set; } = string.Empty;
+
+        public long UserId { get; set; }
     }
 }

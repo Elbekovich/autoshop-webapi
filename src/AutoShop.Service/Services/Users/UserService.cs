@@ -39,7 +39,7 @@ public class UserService : IUserService
             //PhoneNumberConfirmed = userCreateDto.PhoneNumberConfirmed,
             //PassportSerialNumber = userCreateDto.PassportSerialNumber,
             //IsMale = userCreateDto.IsMale,
-            BirthDate = userCreateDto.BirthDate,
+            //BirthDate = userCreateDto.BirthDate,
             //Country = userCreateDto.Country,
             Region = userCreateDto.Region,
             PasswordHash = userCreateDto.PasswordHash,
@@ -86,7 +86,7 @@ public class UserService : IUserService
         //userss.PhoneNumberConfirmed = userUpdateDto.PhoneNumberConfirmed;
         //userss.PassportSerialNumber = userUpdateDto.PassportSerialNumber;
         //userss.IsMale = userUpdateDto.IsMale;
-        userss.BirthDate = userUpdateDto.BirthDate;
+        //userss.BirthDate = userUpdateDto.BirthDate;
         //userss.Country = userUpdateDto.Country;
         userss.Region = userUpdateDto.Region;
         userss.PasswordHash = userUpdateDto.PasswordHash;

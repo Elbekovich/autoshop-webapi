@@ -33,8 +33,8 @@ public class CarRepository : BaseRepository, ICarRepository
         try
         {
             await _connection.OpenAsync();
-            string query = "INSERT INTO public.\"cars\"(category, name, image_path, color, type, transmission_is_automatic, made_at, price, description, created_at, updated_at, probeg, manzil) " +
-                "VALUES (@Category, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description, @CreatedAt, @UpdatedAt, @Probeg, @Manzil);";
+            string query = "INSERT INTO public.\"cars\"(category, name, image_path, color, type, transmission_is_automatic, made_at, price, description, created_at, updated_at, probeg, manzil, user_id) " +
+                "VALUES (@Category, @Name, @ImagePath, @Color, @Type, @TransmissionIsAutomatic, @MadeAt, @Price, @Description, @CreatedAt, @UpdatedAt, @Probeg, @Manzil, @UserId);";
             var result = await _connection.ExecuteAsync(query, entity);
             return result;
         }
@@ -146,7 +146,7 @@ public class CarRepository : BaseRepository, ICarRepository
         try
         {
             await _connection.OpenAsync();
-            string query = $"UPDATE public.cars SET category=@Category, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg, manzil=@Manzil " +
+            string query = $"UPDATE public.\"cars\" SET category=@Category, name=@Name, image_path=@ImagePath, color=@Color, type=@Type, transmission_is_automatic=@TransmissionIsAutomatic, made_at=@MadeAt, price=@Price, description=@Description, created_at=@CreatedAt, updated_at=@UpdatedAt, probeg=@Probeg, manzil=@Manzil " +
                 $"WHERE id = {id};";
             var resUp = await _connection.ExecuteAsync(query, entity);
             return resUp;
