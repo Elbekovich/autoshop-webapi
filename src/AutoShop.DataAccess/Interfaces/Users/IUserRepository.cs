@@ -1,5 +1,6 @@
 ﻿using AutoShop.DataAccess.Common.Interfaces;
 using AutoShop.DataAccess.ViewModels.Users;
+using AutoShop.Domain.Entities.Cars;
 using AutoShop.Domain.Entities.Users;
 
 namespace AutoShop.DataAccess.Interfaces.Users;
@@ -11,5 +12,10 @@ public interface IUserRepository : IRepository<User, User>, IGetAll<User>, ISear
     public Task<bool> LoginAsync(string email, string password);
 
     public Task<User> GetUserByEmail(string email);
+
+    public Task<IList<Car>> GetUserCarsAsync(long userId);
+
+    //bu userni quygan elonlarini ko'rish uchun ishlatiladi
+    //public Task<IList<Car>> GetUserCarsAsync(long userId);
 
 }

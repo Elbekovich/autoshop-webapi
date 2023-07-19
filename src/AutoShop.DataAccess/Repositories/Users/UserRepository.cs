@@ -1,24 +1,14 @@
 ﻿using AutoShop.DataAccess.Interfaces.Users;
 using AutoShop.DataAccess.Utils;
 using AutoShop.DataAccess.ViewModels.Users;
+using AutoShop.Domain.Entities.Cars;
 using AutoShop.Domain.Entities.Users;
 using Dapper;
-using System.Data;
-using System.Security.Cryptography.X509Certificates;
 
 namespace AutoShop.DataAccess.Repositories.Users
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
-
-        //private readonly IDbConnection _dbConnection;
-
-        //public UserRepository(IDbConnection dbConnection)
-        //{
-        //    _dbConnection = dbConnection;
-        //}
-
-
         public async Task<long> CountAsync()
         {
             try
@@ -58,6 +48,7 @@ namespace AutoShop.DataAccess.Repositories.Users
             catch { return 0; }
             finally { await _connection.CloseAsync(); }
         }
+
         public async Task<IList<User>> GetAllAsync(PaginationParams @params)
         {
             try
@@ -98,10 +89,8 @@ namespace AutoShop.DataAccess.Repositories.Users
             throw new NotImplementedException();
         }
 
-
         public async Task<bool> LoginAsync(string email, string password)
         {
-            //throw new NotImplementedException();
             try
             {
                 await _connection.OpenAsync();
@@ -119,21 +108,16 @@ namespace AutoShop.DataAccess.Repositories.Users
                         
                         lamp= false;
                     }
-
-                    
-
                     return lamp;
                 }
                 else
                 {
                     return lamp;
                 }
-
             }
             catch
             {
                 return false;
-                
             }
             finally
             {
@@ -179,6 +163,7 @@ namespace AutoShop.DataAccess.Repositories.Users
                 await _connection.CloseAsync();
             }
         }
+
         public async Task<User> GetUserByEmail(string email)
         {
             string query = "SELECT * FROM Users WHERE Email = @Email";
@@ -186,5 +171,39 @@ namespace AutoShop.DataAccess.Repositories.Users
             var result = await _connection.QueryFirstOrDefaultAsync<User>(query, parameters);
             return result;
         }
+
+        public async Task<IList<Car>> GetUserCarsAsync(long userId)
+        {
+            //throw new NotImplementedException();
+            //string query = @"SELECT * FROM cars WHERE user_id = @UserId";
+
+            //var cars = await _connection.QueryAsync<Car>(query, new { UserId = userId });
+
+            //foreach (var car in cars)
+            //{
+            //    //var user = await GetUserByIdAsync(car.UserId);
+            //    var user = await GetUserByIdAsync(car.UserId);
+            //    car.User = user;
+            //    //car.UserId = user.Id;
+            //}
+
+            //return cars.ToList();
+
+            string query = @"SELECT * FROM cars WHERE user_id = @UserId";
+
+            var cars = await _connection.QueryAsync<Car>(query, new { UserId = userId });
+
+            return cars.ToList();
+
+
+        }
+        //private async Task<User> GetUserByIdAsync(long userId)
+        //{
+        //    string query = @"SELECT * FROM users WHERE id = @UserId";
+
+        //    var user = await _connection.QueryFirstOrDefaultAsync<User>(query, new { UserId = userId });
+
+        //    return user;
+        //}
     }
 }
