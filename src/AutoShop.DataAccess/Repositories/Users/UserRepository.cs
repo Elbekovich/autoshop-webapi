@@ -180,5 +180,24 @@ namespace AutoShop.DataAccess.Repositories.Users
 
             return cars.ToList();
         }
+        public async Task<User> GetLastCreatedUserAsync()
+        {
+            //throw new NotImplementedException();
+            try
+            {
+                await _connection.OpenAsync();
+                string query = "SELECT * FROM users ORDER BY created_at DESC LIMIT 1";
+                var lastCreatedUser = await _connection.QuerySingleOrDefaultAsync<User>(query);
+                return lastCreatedUser;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                await _connection.CloseAsync();
+            }
+        }
     }
 }

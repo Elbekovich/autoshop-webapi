@@ -3,6 +3,7 @@ using AutoShop.DataAccess.Interfaces;
 using AutoShop.DataAccess.Interfaces.Cars;
 using AutoShop.DataAccess.Utils;
 using AutoShop.Domain.Entities.Cars;
+using AutoShop.Domain.Entities.Users;
 using Dapper;
 
 namespace AutoShop.DataAccess.Repositories.Cars;
@@ -170,4 +171,6 @@ public class CarRepository : BaseRepository, ICarRepository
         var cars = await _connection.QueryAsync<Car>(query, parameters);
         return cars.ToList();
     }
+
+    
 }

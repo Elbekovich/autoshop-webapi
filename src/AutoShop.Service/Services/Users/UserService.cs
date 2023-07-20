@@ -6,6 +6,7 @@ using AutoShop.Service.Common.Helpers;
 using AutoShop.Service.Common.Security;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
+using System.Collections.Generic;
 
 namespace AutoShop.Service.Services.Users;
 
@@ -20,27 +21,27 @@ public class UserService : IUserService
 
     public async Task<long> CountAsync() => await _userRepository.CountAsync();
 
-    public async Task<bool> LoginUser(string email, string password)
+    //public async Task<bool> LoginUser(string email, string password)
+    //{
+    //    var user = await _userRepository.GetUserByEmail(email);
+
+    //    if (user != null)
+    //    {
+    //        bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
+
+    //        if (isPasswordCorrect)
+    //        {
+    //            return true; 
+    //        }
+    //    }
+
+    //    return false;
+    //}
+
+
+    public async Task<long> CreateAsync(UserCreateDto userCreateDto)
     {
-        var user = await _userRepository.GetUserByEmail(email);
 
-        if (user != null)
-        {
-            bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
-
-            if (isPasswordCorrect)
-            {
-                return true; 
-            }
-        }
-
-        return false;
-    }
-
-
-    public async Task<bool> CreateAsync(UserCreateDto userCreateDto)
-    {
-        
         User us = new User()
         {
             FirstName = userCreateDto.FirstName,
@@ -59,8 +60,22 @@ public class UserService : IUserService
 
 
         var res = await _userRepository.CreateAsync(us);
-        return res > 0;
+        //return res > 0;
+        return res;
     }
+
+    public async Task<List<User>> GetLastCreatedUserAsync()
+    {
+        List<User> lastCreatedUsers = new List<User>();
+        User lastCreatedUser = await _userRepository.GetLastCreatedUserAsync();
+        if (lastCreatedUser != null)
+        {
+            lastCreatedUsers.Add(lastCreatedUser);
+        }
+
+        return lastCreatedUsers;
+    }
+
 
     public async Task<bool> DeleteAsync(long id)
     {
@@ -91,5 +106,48 @@ public class UserService : IUserService
         userss.UpdatedAt = TimeHelper.GetDateTime();
         var rbResult = await _userRepository.UpdateAsync(id, userss);
         return rbResult > 0;
+    }
+
+    public async Task<List<User>> LoginUserWithData(string email, string password)
+    {
+        //throw new NotImplementedException();
+        var user = await _userRepository.GetUserByEmail(email);
+
+        if (user != null)
+        {
+            bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
+
+            if (isPasswordCorrect)
+            {
+                List<User> users = new List<User>();
+                users.Add(user);
+                return users;
+            }
+        }
+
+        return new List<User>();
+    }
+
+    public async Task<IList<User>> LoginUser(string email, string password)
+    {
+        var user = await _userRepository.GetUserByEmail(email);
+
+        if (user != null)
+        {
+            bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
+
+            if (isPasswordCorrect)
+            {
+                //return true;
+                List<User> users = new List<User>();
+                users.Add(user);
+                return users;
+
+            }
+        }
+
+        //return false;
+        return new List<User>();
+
     }
 }

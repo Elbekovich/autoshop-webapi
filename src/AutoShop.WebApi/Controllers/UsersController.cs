@@ -1,5 +1,6 @@
 ﻿using AutoShop.DataAccess.Interfaces.Users;
 using AutoShop.DataAccess.Utils;
+using AutoShop.Domain.Entities.Users;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
 using AutoShop.Service.Validators.Dtos.Users;
@@ -39,6 +40,47 @@ namespace AutoShop.WebApi.Controllers
             if (result.IsValid) return Ok(await _userService.CreateAsync(userCreateDto));
             else return BadRequest(result.Errors);
         }
+
+        [HttpGet("last-id")]
+        public async Task<IActionResult> GetLastCreatedUser()
+        {
+            List<User> lastCreatedUsers = await _userService.GetLastCreatedUserAsync();
+            return Ok(lastCreatedUsers);
+        }
+
+        //[HttpGet("login-id")]
+        //public async Task<IActionResult> LoginUserWithDataAsync()
+        //{
+        //    List<User> loginIdData = await _userService.LoginUserWithDataAsync();
+        //    return Ok(loginIdData);
+        //}
+
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(long id)
+        {
+            //var user = await _userService.GetUserByIdAsync(id);
+            var user = await _userRepository.GetByIdAsync(id);
+            //var user = await
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+        //[HttpGet("last-created-user")]
+        //public async Task<IActionResult> GetLastCreatedUser()
+        //{
+        //    var lastCreatedUser = await _userService.GetLastCreatedUserAsync();
+        //    if (lastCreatedUser == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(lastCreatedUser);
+        //}
+
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long id)
             => Ok(await _userService.DeleteAsync(id));
@@ -52,9 +94,27 @@ namespace AutoShop.WebApi.Controllers
             else return BadRequest(vrResult.Errors);
         }
 
+        //[HttpGet("Login")]
+        //public async Task<IActionResult> LoginUser(string username, string password)=>
+        //    Ok(await _userService.LoginUser(username, password));
+
+
+
         [HttpGet("Login")]
-        public async Task<IActionResult> LoginUser(string username, string password)=>
-            Ok(await _userService.LoginUser(username, password));
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            // Foydalanuvchini login va parol bilan tekshiramiz
+            List<User> users = (List<User>)await _userService.LoginUser(email, password);
+
+            if (users.Count > 0)
+            {
+                return Ok(users);
+            }
+
+            return Unauthorized(); // Agar login va parol xato bo'lsa 401 HTTP status kodini qaytaradi.
+        }
+
+
 
         [HttpGet("{userId}/cars")]
         public async Task<IActionResult> GetCarsByUserId(long userId)

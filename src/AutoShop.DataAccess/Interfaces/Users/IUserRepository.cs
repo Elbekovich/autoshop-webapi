@@ -15,4 +15,7 @@ public interface IUserRepository : IRepository<User, User>, IGetAll<User>, ISear
 
     public Task<IList<Car>> GetUserCarsAsync(long userId);
 
+    public Task<User> GetLastCreatedUserAsync();
+
+
 }
