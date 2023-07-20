@@ -22,17 +22,15 @@ public class UserService : IUserService
 
     public async Task<bool> LoginUser(string email, string password)
     {
-        //throw new NotImplementedException();
         var user = await _userRepository.GetUserByEmail(email);
 
         if (user != null)
         {
-            //bool isPasswordCorrect = PasswordHelper.VerifyPassword(password, user.PasswordHash, user.Salt);
             bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
 
             if (isPasswordCorrect)
             {
-                return true; // Foydalanuvchi muvaffaqiyatli kirish qilgan
+                return true; 
             }
         }
 
@@ -48,20 +46,11 @@ public class UserService : IUserService
             FirstName = userCreateDto.FirstName,
             LastName = userCreateDto.LastName,
             PhoneNumber = userCreateDto.PhoneNumber,
-            //PhoneNumberConfirmed = userCreateDto.PhoneNumberConfirmed,
-            //PassportSerialNumber = userCreateDto.PassportSerialNumber,
-            //IsMale = userCreateDto.IsMale,
-            //BirthDate = userCreateDto.BirthDate,
-            //Country = userCreateDto.Country,
             Region = userCreateDto.Region,
             PasswordHash = userCreateDto.PasswordHash,
             Email = userCreateDto.Email,
-            
-            //Salt = userCreateDto.Salt,
             CreatedAt = TimeHelper.GetDateTime(),
             UpdatedAt = TimeHelper.GetDateTime(),
-            //Role = userCreateDto.Role,
-
         };
         var hashres = PasswordHasher.Hash(us.PasswordHash);
         us.Salt = hashres.Salt;
@@ -90,28 +79,16 @@ public class UserService : IUserService
 
     public async Task<bool> UpdateAsync(long id, UserUpdateDto userUpdateDto)
     {
-        //throw new NotImplementedException();
         var userss = await _userRepository.GetByIdAsync(id); //@id
         if (userss is null) throw new UsersNotFoundException();
         userss.FirstName = userUpdateDto.FirstName;
         userss.LastName = userUpdateDto.LastName;
         userss.PhoneNumber = userUpdateDto.PhoneNumber;
-        //userss.PhoneNumberConfirmed = userUpdateDto.PhoneNumberConfirmed;
-        //userss.PassportSerialNumber = userUpdateDto.PassportSerialNumber;
-        //userss.IsMale = userUpdateDto.IsMale;
-        //userss.BirthDate = userUpdateDto.BirthDate;
-        //userss.Country = userUpdateDto.Country;
         userss.Region = userUpdateDto.Region;
         userss.PasswordHash = userUpdateDto.PasswordHash;
-
         var hashres = PasswordHasher.Hash(userss.PasswordHash);
-        //userss.Salt = hashres.Salt;
         userss.PasswordHash = hashres.PasswordHash;
-
-
-        //userss.Salt = userUpdateDto.Salt;
         userss.UpdatedAt = TimeHelper.GetDateTime();
-        //userss.Role = userss.Role;
         var rbResult = await _userRepository.UpdateAsync(id, userss);
         return rbResult > 0;
     }

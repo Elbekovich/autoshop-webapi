@@ -10,30 +10,27 @@ namespace AutoShop.Service.Validators.Dtos.Cars
         {
 
 
-            RuleFor(dto => dto.Name).NotNull().NotEmpty().WithMessage("Moshinani nameni kiriting")
-            .MinimumLength(3).WithMessage("Name 3 ta belgidan kop bolishi kerak")
-            .MaximumLength(50).WithMessage("Name 50 ta belgidan kam bo'lishi kerak");
+            RuleFor(dto => dto.Name).NotNull().NotEmpty().WithMessage("Car name is required!")
+            .MaximumLength(30).WithMessage("Car name must be less than 30 characters");
 
 
-            RuleFor(dto => dto.Color).NotNull().NotEmpty().WithMessage("Moshinani  rangini kiriting")
-            .MinimumLength(1).WithMessage("rangi 1 ta harfdan kop boladi")
-            .MaximumLength(10).WithMessage("rangi 10 ta harfdan kam boladi");
+            RuleFor(dto => dto.Color).NotNull().NotEmpty().WithMessage("Car color is required!")
+            .MaximumLength(10).WithMessage("Car color must be less than 10 characters");
 
 
-            RuleFor(dto => dto.Description).NotNull().NotEmpty().WithMessage("Moshina haqida qisqacha malumot kiriting")
-            .MinimumLength(3).WithMessage("Malumot 10 ta belgidan kop bolishi kerak")
-            .MaximumLength(50).WithMessage("Malumot 50 ta belgidan kam bo'lishi kerak");
+            RuleFor(dto => dto.Description).NotNull().NotEmpty().WithMessage("Description is required!")
+            .MaximumLength(50).WithMessage("Description must be less than 50 characters");
 
-            RuleFor(dto => dto.Price).NotNull().NotEmpty().WithMessage("Moshinani narxini kiriting");
+            RuleFor(dto => dto.Price).NotNull().NotEmpty().WithMessage("Car price is required!");
 
 
-            RuleFor(dto => dto.Type).NotEmpty().NotNull().WithMessage("Moshinani turini kiriting");
+            RuleFor(dto => dto.Type).NotEmpty().NotNull().WithMessage("Car type is required!");
 
             RuleFor(dto => dto.TransmissionIsAutomatic).NotNull().NotEmpty().WithMessage("Mashina avtomat yoki mehanik kiriting");
 
-            RuleFor(dto => dto.MadeAt).NotEmpty().NotNull().WithMessage("Moshina ishlab chiqarilgan sanani kiriting");
+            RuleFor(dto => dto.MadeAt).NotEmpty().NotNull().WithMessage("Car date of manufacture required!");
 
-            RuleFor(dto => dto.Probeg).NotNull().NotEmpty().WithMessage("Moshina bosib otgan masofasini kiriting");
+            RuleFor(dto => dto.Probeg).NotNull().NotEmpty().WithMessage("Car the distance traveled required!");
 
             int MaxImageSizeMb = 5;
             RuleFor(dto => dto.ImagePath).NotEmpty().NotNull().WithMessage("Rasm quyish majburiy");

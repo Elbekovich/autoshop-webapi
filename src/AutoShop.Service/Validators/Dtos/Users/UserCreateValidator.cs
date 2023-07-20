@@ -7,30 +7,22 @@ public class UserCreateValidator : AbstractValidator<UserCreateDto>
 {
     public UserCreateValidator()
     {
-        RuleFor(dto => dto.FirstName).NotNull().NotEmpty().WithMessage("Nameni kiritish majburiy")
-            .MinimumLength(3).WithMessage("Name 3 ta belgidan kop bolishi kerak")
-            .MaximumLength(20).WithMessage("Name 20 ta belgidan kam bolishi kerak");
+        RuleFor(dto => dto.FirstName).NotNull().NotEmpty().WithMessage("Firstname is required")
+            .MaximumLength(30).WithMessage("Firstname must be less than 30 characters");
 
+        RuleFor(dto => dto.LastName).NotNull().NotEmpty().WithMessage("Lastname is required")
+            .MaximumLength(30).WithMessage("Lastname must be less than 30 characters");
 
-        RuleFor(dto => dto.LastName).NotNull().NotEmpty().WithMessage("Surnameni kiritish majburiy")
-            .MinimumLength(5).WithMessage("Surname 5 ta belgidan kop bolishi kerak")
-            .MaximumLength(20).WithMessage("Surname 20 ta belgidan kam bolishi kerak");
-        RuleFor(dto => dto.PhoneNumber).NotNull().NotEmpty().WithMessage("Telefon raqam kiritish majburiy")
-            .Must(phone => PhoneNumberValidator.IsValid(phone)).WithMessage("Telefon raqam to'g'ri kiritilmadi");
+        RuleFor(dto => dto.PhoneNumber).Must(phone => PhoneNumberValidator.IsValid(phone))
+            .WithMessage("Phone number is invalid! ex: +998xxYYYAABB");
 
-        RuleFor(dto => dto.Email).NotEmpty().NotEmpty().WithMessage("Email is required bro!")
-            .Must(email => EmailValidator.isValid(email)).WithMessage("Email is in correct!");
+        RuleFor(dto => dto.Email).NotEmpty().NotEmpty().WithMessage("Email is required!")
+            .Must(email => EmailValidator.isValid(email)).WithMessage("email is in incorrect!");
 
-        RuleFor(dto => dto.Region).NotNull().NotEmpty().WithMessage("Region kiritish majburiy")
-            .MinimumLength(3).WithMessage("Region 3 ta belgidan kop bolishi kerak")
-            .MaximumLength(20).WithMessage("Region 20 ta belgidan kam bolishi kerak");
+        RuleFor(dto => dto.Region).NotNull().NotEmpty().WithMessage("Region is required!")
+            .MaximumLength(30).WithMessage("Region must be less than 30 characters");
 
-        RuleFor(dto => dto.PasswordHash).NotNull().NotEmpty().WithMessage("Password kiritish majburiy")
-            .Must(password => PasswordValidator.IsStrongPassword(password).isValiid).WithMessage("Password togri kelmadi!");
-        //
-        //.MinimumLength(3).WithMessage("Password 8 ta belgidan kop bolishi kerak")
-        //.MaximumLength(20).WithMessage("Password 20 ta belgidan kam bolishi kerak");
-
-        
+        RuleFor(dto => dto.PasswordHash).NotNull().NotEmpty().WithMessage("Password is requuired")
+            .Must(password => PasswordValidator.IsStrongPassword(password).isValiid).WithMessage("Password is not strong password!");
     }
 }
