@@ -16,7 +16,7 @@ namespace AutoShop.Service.Dtos.Cars
 
         public string TransmissionIsAutomatic { get; set; } = string.Empty;
 
-        public DateTime MadeAt { get; set; }
+        public int MadeAt { get; set; }
 
         public string Price { get; set; } = String.Empty;
 

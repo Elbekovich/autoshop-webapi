@@ -48,21 +48,10 @@ namespace AutoShop.WebApi.Controllers
             return Ok(lastCreatedUsers);
         }
 
-        //[HttpGet("login-id")]
-        //public async Task<IActionResult> LoginUserWithDataAsync()
-        //{
-        //    List<User> loginIdData = await _userService.LoginUserWithDataAsync();
-        //    return Ok(loginIdData);
-        //}
-
-
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(long id)
         {
-            //var user = await _userService.GetUserByIdAsync(id);
             var user = await _userRepository.GetByIdAsync(id);
-            //var user = await
             if (user == null)
             {
                 return NotFound();
@@ -70,16 +59,7 @@ namespace AutoShop.WebApi.Controllers
             return Ok(user);
         }
 
-        //[HttpGet("last-created-user")]
-        //public async Task<IActionResult> GetLastCreatedUser()
-        //{
-        //    var lastCreatedUser = await _userService.GetLastCreatedUserAsync();
-        //    if (lastCreatedUser == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(lastCreatedUser);
-        //}
+        
 
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long id)
@@ -94,13 +74,10 @@ namespace AutoShop.WebApi.Controllers
             else return BadRequest(vrResult.Errors);
         }
 
-        //[HttpGet("Login")]
-        //public async Task<IActionResult> LoginUser(string username, string password)=>
-        //    Ok(await _userService.LoginUser(username, password));
+        
 
 
-
-        [HttpGet("Login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(string email, string password)
         {
             // Foydalanuvchini login va parol bilan tekshiramiz

@@ -14,7 +14,7 @@ public class Car : Auditable
 
     public string TransmissionIsAutomatic { get; set; } = string.Empty;
 
-    public DateTime MadeAt { get; set; }
+    public int MadeAt { get; set; }
 
     public string Price { get; set; } = string.Empty;
 

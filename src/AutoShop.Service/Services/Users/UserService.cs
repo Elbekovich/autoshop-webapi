@@ -6,7 +6,6 @@ using AutoShop.Service.Common.Helpers;
 using AutoShop.Service.Common.Security;
 using AutoShop.Service.Dtos.Users;
 using AutoShop.Service.Interfaces.Users;
-using System.Collections.Generic;
 
 namespace AutoShop.Service.Services.Users;
 
@@ -146,7 +145,6 @@ public class UserService : IUserService
             }
         }
 
-        //return false;
         return new List<User>();
 
     }

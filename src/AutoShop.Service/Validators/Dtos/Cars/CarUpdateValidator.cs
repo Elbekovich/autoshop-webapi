@@ -26,7 +26,7 @@ namespace AutoShop.Service.Validators.Dtos.Cars
 
             RuleFor(dto => dto.TransmissionIsAutomatic).NotNull().NotEmpty().WithMessage("Mashina avtomat yoki mehanik kiriting");
 
-            RuleFor(dto => dto.MadeAt).NotEmpty().NotNull().WithMessage("Car date of manufacture required!");
+            //RuleFor(dto => dto.MadeAt).NotEmpty().NotNull().WithMessage("Car date of manufacture required!");
 
             RuleFor(dto => dto.Probeg).NotNull().NotEmpty().WithMessage("Car the distance traveled required!");
 
@@ -39,6 +39,13 @@ namespace AutoShop.Service.Validators.Dtos.Cars
                 return MediaHelper.GetImageExtensions().Contains(fileInfo.Extension);
 
             }).WithMessage("Bu fayl turi rasm faylining turi emas");
+
+
+            RuleFor(dto => dto.MadeAt).NotEmpty().NotNull().WithMessage("MadeAt is required")
+                .Must(madeAt => MadeAtValidator.isTrueMadeAt(madeAt).isValid).WithMessage("Madeat is not uncorrect madeat!");
+
+
+
         }
     }
 }

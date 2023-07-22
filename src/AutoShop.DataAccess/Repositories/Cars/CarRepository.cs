@@ -1,9 +1,6 @@
-﻿using AutoShop.DataAccess.Common.Interfaces;
-using AutoShop.DataAccess.Interfaces;
-using AutoShop.DataAccess.Interfaces.Cars;
+﻿using AutoShop.DataAccess.Interfaces.Cars;
 using AutoShop.DataAccess.Utils;
 using AutoShop.Domain.Entities.Cars;
-using AutoShop.Domain.Entities.Users;
 using Dapper;
 
 namespace AutoShop.DataAccess.Repositories.Cars;
@@ -164,10 +161,8 @@ public class CarRepository : BaseRepository, ICarRepository
 
     public async Task<IList<Car>> GetCarsByCategory(string category)
     {
-        //throw new NotImplementedException();
         string query = "SELECT * FROM cars WHERE category = @Category";
         var parameters = new { Category = category };
-        //var cars = await _connection.QueryAsync<Car>(query, parameters);
         var cars = await _connection.QueryAsync<Car>(query, parameters);
         return cars.ToList();
     }
