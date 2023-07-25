@@ -41,6 +41,7 @@ namespace AutoShop.Service.Services.Cars
                 CreatedAt = TimeHelper.GetDateTime(),
                 UpdatedAt = TimeHelper.GetDateTime(),
                 Probeg = dto.Probeg,
+                Manzil = dto.Manzil,
                 UserId = dto.UserId,
             };
             var result = await _repository.CreateAsync(car);
@@ -91,7 +92,7 @@ namespace AutoShop.Service.Services.Cars
         public Task<int> SearchCountAsync(string search)
         {
             throw new NotImplementedException();
-            //var car = _repository.SearchCountAsync(search);
+            
 
         }
 

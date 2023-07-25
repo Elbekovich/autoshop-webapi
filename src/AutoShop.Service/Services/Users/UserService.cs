@@ -20,24 +20,7 @@ public class UserService : IUserService
 
     public async Task<long> CountAsync() => await _userRepository.CountAsync();
 
-    //public async Task<bool> LoginUser(string email, string password)
-    //{
-    //    var user = await _userRepository.GetUserByEmail(email);
-
-    //    if (user != null)
-    //    {
-    //        bool isPasswordCorrect = PasswordHasher.Verify(password, user.PasswordHash, user.Salt);
-
-    //        if (isPasswordCorrect)
-    //        {
-    //            return true; 
-    //        }
-    //    }
-
-    //    return false;
-    //}
-
-
+    
     public async Task<long> CreateAsync(UserCreateDto userCreateDto)
     {
 
@@ -56,10 +39,8 @@ public class UserService : IUserService
         us.Salt = hashres.Salt;
         us.PasswordHash = hashres.PasswordHash;
 
-
-
         var res = await _userRepository.CreateAsync(us);
-        //return res > 0;
+    
         return res;
     }
 
@@ -93,7 +74,7 @@ public class UserService : IUserService
 
     public async Task<bool> UpdateAsync(long id, UserUpdateDto userUpdateDto)
     {
-        var userss = await _userRepository.GetByIdAsync(id); //@id
+        var userss = await _userRepository.GetByIdAsync(id); 
         if (userss is null) throw new UsersNotFoundException();
         userss.FirstName = userUpdateDto.FirstName;
         userss.LastName = userUpdateDto.LastName;
@@ -137,7 +118,7 @@ public class UserService : IUserService
 
             if (isPasswordCorrect)
             {
-                //return true;
+                
                 List<User> users = new List<User>();
                 users.Add(user);
                 return users;
